@@ -6,7 +6,7 @@ resource "aws_subnet" "public" {
   availability_zone       = element(var.availability_zones, count.index)
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.project_name}-${var.vpc_name}-AZ${count.index + 1}-PublicSubnet${count.index + 1}-EC2-WebServer"
+    Name = "${var.project_name}-${var.vpc_name}-AZ${count.index + 1}-PublicSubnet${count.index + 1}-EC2-Bastion"
   }
 }
 
@@ -17,6 +17,6 @@ resource "aws_subnet" "private" {
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + var.public_subnet_count)
   availability_zone = element(var.availability_zones, count.index)
   tags = {
-    Name = "${var.project_name}-${var.vpc_name}-AZ${count.index + 1}-PrivateSubnet${count.index + 1}-EC2-DbServer"
+    Name = "${var.project_name}-${var.vpc_name}-AZ${count.index + 1}-PrivateSubnet${count.index + 1}-EC2-Docker"
   }
 }

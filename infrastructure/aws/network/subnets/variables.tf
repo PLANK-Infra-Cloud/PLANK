@@ -18,12 +18,13 @@ variable "private_subnet_count" {
 variable "availability_zones" {
   description = "List of availability zones for the subnets"
   type        = list(string)
-  default     = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+  default     = ["eu-west-3a", "eu-west-3b", "eu-west-3c"]
 }
 
 variable "project_name" {
   description = "Project name"
   type        = string
+  default     = "PLANK-PARIS"
 }
 
 variable "vpc_name" {
