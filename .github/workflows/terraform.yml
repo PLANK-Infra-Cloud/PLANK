@@ -1,4 +1,4 @@
-name: Terraform Workflow
+name: Terraform CI/CD
 
 on:
   push:
@@ -10,18 +10,21 @@ on:
 
 jobs:
   terraform:
-    name: Terraform Workflow
+    name: Terraform Deployment
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout the code from the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. Setup Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.0
 
+      # 3. Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -29,11 +32,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      # 4. Initialize Terraform
       - name: Terraform Init
         run: terraform init
 
+      # 5. Validate Terraform files
       - name: Terraform Validate
         run: terraform validate
 
+      # 6. Generate Terraform Plan
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+
+      # 7. Apply Terraform changes (optional)
+      # Uncomment this to apply automatically to AWS
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve tfplan
+
