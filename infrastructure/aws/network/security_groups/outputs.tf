@@ -1,19 +1,19 @@
-output "web_server_sg_id" {
-  description = "ID of the Web Server Security Group"
-  value       = aws_security_group.web_server.id
+output "bastion_instance_sg_id" {
+  description = "ID of the Bastion Security Group"
+  value       = aws_security_group.bastion_instance.id
 }
 
-output "db_server_sg_id" {
-  description = "ID of the Database Server Security Group"
-  value       = aws_security_group.db_server.id
+output "docker_instance_sg_id" {
+  description = "ID of the Docker Security Group"
+  value       = aws_security_group.docker_instance.id
 }
 
-output "sg_web_lb_id" {
-  description = "ID of the Web Load Balancer Security Group"
-  value       = aws_security_group.lb_web.id
+output "sg_bastion_lb_id" {
+  description = "ID of the Bastion Load Balancer Security Group"
+  value       = aws_security_group.lb_bastion.id
 }
 
-output "sg_db_lb_id" {
-  description = "ID of the Database Load Balancer Security Group"
-  value       = aws_security_group.lb_db.id
+output "sg_docker_lb_id" {
+  description = "ID of the Docker Load Balancer Security Group"
+  value       = aws_security_group.lb_docker.id
 }

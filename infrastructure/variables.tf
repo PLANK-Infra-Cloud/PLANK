@@ -1,20 +1,3 @@
-###############################################################################################################################################################
-#####                                                                                                                                                     #####
-#####    ███████╗██╗  ██╗██╗███████╗████████╗     ████████╗███████╗ ██████╗██╗  ██╗     ███████╗███████╗ ██████╗██╗   ██╗██████╗ ██╗████████╗██    ██║    #####
-#####    ██╔════╝██║  ██║██║██╔════╝╚══██╔══╝     ╚══██╔══╝██╔════╝██╔════╝██║  ██║     ██╔════╝██╔════╝██╔════╝██║   ██║██╔══██╗██║╚══██╔══╝ ██  ██╔╝    #####
-#####    ███████╗███████║██║██████╗    ██║           ██║   █████╗  ██║     ███████║     ███████╗█████╗  ██║     ██║   ██║██████╔╝██║   ██║     ████╔╝     #####
-#####    ╚════██║██╔══██║██║██╔═══╝    ██║           ██║   ███╗    ██║     ██║  ██║     ╚════██║███╗    ██║     ██║   ██║██╔═██╗ ██║   ██║      ██╔╝      #####
-#####    ███████║██║  ██║██║██║        ██║           ██║   ███████╗╚██████╗██║  ██║     ███████║███████╗╚██████╗╚██████╔╝██║  ██╗██║   ██║      ██║       #####
-#####    ╚══════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝           ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝     ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝   ╚═╝      ╚═╝       #####
-#####                                                                                                                                                     #####
-###############################################################################################################################################################
-# Authors: Tristan Truckle & Ibrahim Bedoui
-# Version: 1.0
-# Date: xx-xx-xxxx
-# Subject:
-# Description:
-###############################################################################################################################################################
-
 # Declare variables to match Terraform Cloud workspace settings (Terraform HCL : secrets & variables)
 variable "AWS_ACCESS_KEY_ID" {
   type        = string
@@ -32,7 +15,7 @@ variable "AWS_SECRET_ACCESS_KEY" {
 variable "AWS_REGION" {
  description = "This variable defines the default region for AWS deployments"
  type        = string
- default     = "eu-west-1"
+ default     = "eu-west-3"
 }
 
 variable "vpc_cidr" {
@@ -42,8 +25,9 @@ variable "vpc_cidr" {
 }
 
 variable "project_name" {
-  description = "STS-IRL"
+  description = "PLANK-PARIS"
   type        = string
+  default     = "PLANK-PARIS"
 }
 
 variable "vpc_name" {
@@ -67,7 +51,7 @@ variable "private_subnet_count" {
 variable "availability_zones" {
   description = "List of availability zones for the subnets"
   type        = list(string)
-  default     = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+  default     = ["eu-west-3a", "eu-west-3b", "eu-west-3c"]
 }
 
 variable "eip_count" {

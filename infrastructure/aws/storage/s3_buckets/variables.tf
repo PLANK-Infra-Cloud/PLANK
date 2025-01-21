@@ -1,10 +1,10 @@
-variable "project_name" {
-  description = "Name of the project"
-  type        = string
-}
+# variable "project_name" {
+#   description = "Name of the project"
+#   type        = string
+# }
 
-variable "environment" {
-  description = "Environment (dev, prod, ..)"
-  type        = string
-  default     = "prod"
-}
+# variable "environment" {
+#   description = "Environment (dev, prod, ..)"
+#   type        = string
+#   default     = "prod"
+# }

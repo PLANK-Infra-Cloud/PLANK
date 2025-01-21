@@ -6,8 +6,9 @@ variable "vpc_cidr" {
 }
 
 variable "project_name" {
-  description = "STS-IRL"
+  description = "PLANK-PARIS"
   type        = string
+  default     = "PLANK-PARIS"
 }
 
 variable "vpc_name" {
