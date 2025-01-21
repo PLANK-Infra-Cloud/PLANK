@@ -46,6 +46,6 @@ jobs:
 
       # 7. Apply Terraform changes (optional)
       # Uncomment this to apply automatically to AWS
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve tfplan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
 
