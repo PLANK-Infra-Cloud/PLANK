@@ -43,17 +43,6 @@ module "security_groups" {
   vpc_id       = module.vpc.vpc_id
 }
 
-# #Call module ALB
-# module "application_load_balancers" {
-#   source             = "./aws/load_balancers/application_load_balancers"
-#   public_subnet_ids  = module.subnets.public_subnet_ids
-#   private_subnet_ids = module.subnets.private_subnet_ids
-#   sg_web_lb_id       = module.security_groups.sg_web_lb_id
-#   sg_db_lb_id        = module.security_groups.sg_db_lb_id
-#   project_name       = var.project_name
-#   vpc_name           = var.vpc_name
-# }
-
 #Call module Internet Gateway
 module "igws" {
   source       = "./aws/network/igws"
