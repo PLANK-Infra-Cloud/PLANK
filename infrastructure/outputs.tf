@@ -34,26 +34,6 @@ output "lb_db_sg_id" {
   value       = module.security_groups
 }
 
-# output "web_lb_arn" {
-#   description = "ARN of the Web Server Application Load Balancer"
-#   value       = module.application_load_balancers
-# }
-
-# output "web_lb_dns" {
-#   description = "DNS name of the Web Server Application Load Balancer"
-#   value       = module.application_load_balancers
-# }
-
-# output "db_lb_arn" {
-#   description = "ARN of the Database Server Application Load Balancer"
-#   value       = module.application_load_balancers
-# }
-
-# output "db_lb_dns" {
-#   description = "DNS name of the Database Server Application Load Balancer"
-#   value       = module.application_load_balancers
-# }
-
 output "igw_id" {
   description = "ID of the Internet Gateway"
   value       = module.igws.igw_id
