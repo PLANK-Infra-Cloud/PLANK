@@ -35,13 +35,13 @@ module "subnets" {
   vpc_name            = var.vpc_name
 }
 
-# #Call module security groups
-# module "security_groups" {
-#   source              = "./aws/network/security_groups"
-#   project_name = var.project_name
-#   vpc_name     = var.vpc_name
-#   vpc_id       = module.vpc.vpc_id
-# }
+#Call module security groups
+module "security_groups" {
+  source              = "./aws/network/security_groups"
+  project_name = var.project_name
+  vpc_name     = var.vpc_name
+  vpc_id       = module.vpc.vpc_id
+}
 
 # #Call module Internet Gateway
 # module "igws" {
