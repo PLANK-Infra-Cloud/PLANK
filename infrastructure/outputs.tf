@@ -5,14 +5,14 @@ output "vpc_id" {
   value       = module.vpc.vpc_id
 }
 
-# output "public_subnet_ids" {
-#   description = "The ID of the public subnets"
-#   value       = module.subnets.public_subnet_ids
-# }
-# output "private_subnet_ids" {
-#   description = "The ID of the private subnets"
-#   value       = module.subnets.private_subnet_ids
-# }
+output "public_subnet_ids" {
+  description = "The ID of the public subnets"
+  value       = module.subnets.public_subnet_ids
+}
+output "private_subnet_ids" {
+  description = "The ID of the private subnets"
+  value       = module.subnets.private_subnet_ids
+}
 
 # output "web_server_sg_id" {
 #   description = "ID of the Web Server Security Group"
