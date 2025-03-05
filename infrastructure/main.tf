@@ -43,13 +43,13 @@ module "security_groups" {
   vpc_id       = module.vpc.vpc_id
 }
 
-# #Call module Internet Gateway
-# module "igws" {
-#   source       = "./aws/network/igws"
-#   vpc_id       = module.vpc.vpc_id
-#   project_name = var.project_name
-#   vpc_name     = var.vpc_name
-# }
+#Call module Internet Gateway
+module "igws" {
+  source       = "./aws/network/igws"
+  vpc_id       = module.vpc.vpc_id
+  project_name = var.project_name
+  vpc_name     = var.vpc_name
+}
 
 # #Call module route_tables
 # module "route_tables" {
