@@ -1,0 +1,6 @@
+---
+- hosts: docker-swarm-servers
+  
+  roles:
+    - docker
+    - docker-swarm

@@ -1,6 +1,6 @@
 ---
 # Docker vars
-docker_ansible_user: "ansible"
+docker_ansible_user: "admintf"
 
 docker_group: "docker"
 

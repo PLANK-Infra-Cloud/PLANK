@@ -1,0 +1,41 @@
+---
+- name: Initialize Docker Swarm on first manager node
+  when: inventory_hostname in groups['ds_managers']
+  block:
+    - name: Check Docker Swarm status
+      ansible.builtin.shell: docker info --format '{{ "{{.Swarm.LocalNodeState}}" }}'
+      register: docker_swarm_manager_status
+      changed_when: false
+        
+    - name: Initialize Docker Swarm
+      ansible.builtin.shell:
+        cmd: docker swarm init --advertise-addr {{ ansible_facts['enp0s8']['ipv4']['address'] }}
+      when: "'inactive' in docker_swarm_manager_status.stdout"
+      register: swarm_init
+      changed_when: "'Swarm initialized' in swarm_init.stdout"
+
+    - name: Retrieve Docker Swarm token
+      ansible.builtin.shell: docker swarm join-token worker -q
+      register: docker_swarm_token
+      changed_when: false
+    
+    - name: Store Worker Token in Variable
+      ansible.builtin.set_fact:
+        swarm_worker_token: "{{ docker_swarm_token.stdout }}"
+
+- name: Join workers to Docker Swarm
+  when: inventory_hostname in groups['ds_workers']
+  block:
+    - name: Check if node is part of a swarm
+      ansible.builtin.shell: docker info --format '{{ "{{.Swarm.LocalNodeState}}" }}'
+      register: docker_swarm_worker_status
+      changed_when: false
+     
+    - name: Join Swarm as worker if not already part of a swarm
+      ansible.builtin.shell:
+        cmd: docker swarm join --token {{ hostvars[groups['ds_managers'][0]]['swarm_worker_token'] }} {{ hostvars[groups['ds_managers'][0]]['ansible_facts']['enp0s8']['ipv4']['address'] }}:2377
+      when: docker_swarm_worker_status != 'active'
+      register: swarm_join
+      changed_when: "'This node joined a swarm as a worker' in swarm_join.stdout"
+      failed_when: "'This node is already part of a swarm' not in swarm_join.stderr"
+      ignore_errors: true

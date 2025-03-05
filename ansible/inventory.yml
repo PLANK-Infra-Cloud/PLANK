@@ -1,7 +1,11 @@
 all:
   children:
-    docker-swarm:
-      hosts:
-        ds-master:
-        ds-node01:
-        ds-node02:
+    docker-swarm-servers:
+      children:
+        ds_managers:
+          hosts:
+            ds-master:
+        ds_workers:
+          hosts:
+            ds-node01:
+            ds-node02:
