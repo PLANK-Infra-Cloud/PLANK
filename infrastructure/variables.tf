@@ -60,14 +60,8 @@ variable "eip_count" {
   default     = 3
 }
 
-variable "web_server_instance_type" {
+variable "EC2_instance_type" {
   description = "Instance type for the Web Server"
-  type        = string
-  default     = "t2.micro"
-}
-
-variable "db_server_instance_type" {
-  description = "Instance type for the Database Server"
   type        = string
   default     = "t2.micro"
 }
