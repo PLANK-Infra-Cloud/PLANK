@@ -34,25 +34,20 @@ output "public_route_table_id" {
   value       = module.route_tables.public_route_table_id
 }
 
-# output "web_server_id" {
-#   description = "ID of the Web Server instance"
-#   value       = module.ec2_instances.web_server_id
-# }
+output "EC2_id" {
+  description = "ID of the EC2 instance"
+  value       = module.ec2_instances.EC2_id
+}
 
-# output "db_server_id" {
-#   description = "ID of the Database Server instance"
-#   value       = module.ec2_instances.db_server_id
-# }
+output "EC2_public_ip" {
+  description = "Public IP of the EC2 instance"
+  value       = module.ec2_instances.EC2_public_ip
+}
 
-# output "web_server_public_ip" {
-#   description = "Public IP of the Web Server instance"
-#   value       = module.ec2_instances.web_server_public_ip
-# }
-
-# output "db_server_private_ip" {
-#   description = "Private IP of the Database Server instance"
-#   value       = module.ec2_instances.db_server_private_ip
-# }
+output "EC2_private_ip" {
+  description = "Private IP of the EC2 instance"
+  value       = module.ec2_instances.EC2_private_ip
+}
 
 # output "bucket_name" {
 #   description = "Name of the S3 bucket"

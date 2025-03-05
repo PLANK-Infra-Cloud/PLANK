@@ -71,22 +71,15 @@ module "elastic_ips" {
   vpc_name     = var.vpc_name
 }
 
-# #Call module ec2_instances
-# module "ec2_instances" {
-#   source = "./aws/compute/ec2_instances"
-
-#   bastion_instance_type  = "t2.micro"
-#   db_server_instance_type   = "t2.micro"
-
-#   public_subnet_id          = module.subnets.public_subnet_ids[0]
-#   private_subnet_id         = module.subnets.private_subnet_ids[0]
-
-#   web_server_security_group = module.security_groups.web_server_sg_id
-#   db_server_security_group  = module.security_groups.db_server_sg_id
-
-#   project_name              = var.project_name
-#   vpc_name                  = var.vpc_name
-# }
+#Call module ec2_instances
+module "ec2_instances" {
+  source                    = "./aws/compute/ec2_instances"
+  EC2_instance_type         = "t2.micro"
+  public_subnet_id          = module.subnets.public_subnet_ids[0]
+  EC2_security_group        = module.security_groups.instance_sg_id
+  project_name              = var.project_name
+  vpc_name                  = var.vpc_name
+}
 
 # #Call module s3 bucket
 # module "s3_bucket" {
