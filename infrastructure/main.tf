@@ -23,44 +23,44 @@ module "vpc" {
   vpc_name     = var.vpc_name
 }
 
-#Call module subnets
-module "subnets" {
-  source              = "./aws/network/subnets"
-  vpc_id              = module.vpc.vpc_id
-  vpc_cidr            = var.vpc_cidr
-  public_subnet_count = var.public_subnet_count
-  private_subnet_count = var.private_subnet_count
-  availability_zones  = var.availability_zones
-  project_name        = var.project_name
-  vpc_name            = var.vpc_name
-}
+# #Call module subnets
+# module "subnets" {
+#   source              = "./aws/network/subnets"
+#   vpc_id              = module.vpc.vpc_id
+#   vpc_cidr            = var.vpc_cidr
+#   public_subnet_count = var.public_subnet_count
+#   private_subnet_count = var.private_subnet_count
+#   availability_zones  = var.availability_zones
+#   project_name        = var.project_name
+#   vpc_name            = var.vpc_name
+# }
 
-#Call module security groups
-module "security_groups" {
-  source              = "./aws/network/security_groups"
-  project_name = var.project_name
-  vpc_name     = var.vpc_name
-  vpc_id       = module.vpc.vpc_id
-}
+# #Call module security groups
+# module "security_groups" {
+#   source              = "./aws/network/security_groups"
+#   project_name = var.project_name
+#   vpc_name     = var.vpc_name
+#   vpc_id       = module.vpc.vpc_id
+# }
 
-#Call module Internet Gateway
-module "igws" {
-  source       = "./aws/network/igws"
-  vpc_id       = module.vpc.vpc_id
-  project_name = var.project_name
-  vpc_name     = var.vpc_name
-}
+# #Call module Internet Gateway
+# module "igws" {
+#   source       = "./aws/network/igws"
+#   vpc_id       = module.vpc.vpc_id
+#   project_name = var.project_name
+#   vpc_name     = var.vpc_name
+# }
 
-#Call module route_tables
-module "route_tables" {
-  source              = "./aws/network/route_tables"
-  vpc_id              = module.vpc.vpc_id
-  public_subnet_ids   = module.subnets.public_subnet_ids
-  private_subnet_ids  = module.subnets.private_subnet_ids
-  igw_id              = module.igws.igw_id
-  project_name        = var.project_name
-  vpc_name            = var.vpc_name
-}
+# #Call module route_tables
+# module "route_tables" {
+#   source              = "./aws/network/route_tables"
+#   vpc_id              = module.vpc.vpc_id
+#   public_subnet_ids   = module.subnets.public_subnet_ids
+#   private_subnet_ids  = module.subnets.private_subnet_ids
+#   igw_id              = module.igws.igw_id
+#   project_name        = var.project_name
+#   vpc_name            = var.vpc_name
+# }
 
 # #Call module elastic_ips
 # module "elastic_ips" {
