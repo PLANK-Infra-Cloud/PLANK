@@ -19,10 +19,10 @@ output "instance_sg_id" {
   value       = module.security_groups.instance_sg_id
 }
 
-# output "igw_id" {
-#   description = "ID of the Internet Gateway"
-#   value       = module.igws.igw_id
-# }
+output "igw_id" {
+  description = "ID of the Internet Gateway"
+  value       = module.igws.igw_id
+}
 
 # output "elastic_ips" {
 #   description = "Liste of Elastic IPs createds"
