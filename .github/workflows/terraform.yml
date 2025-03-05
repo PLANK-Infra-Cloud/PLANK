@@ -26,17 +26,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. 🔍 Debug - Vérification des fichiers clonés
-      - name: Debug - Liste des fichiers
-        run: ls -R ${{ github.workspace }}
-
-      # 3. Installer Terraform
+      # 2. Installer Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.0
 
-      # 4. Configurer AWS Credentials pour Terraform
+      # 3. Configurer AWS Credentials pour Terraform
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -44,22 +40,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-3
 
-      # 5. Initialiser Terraform ✅ Ajout du `working-directory`
+      # 4. Initialiser Terraform
       - name: Terraform Init
         run: terraform init
-        working-directory: infrastructure/
 
-      # 6. Vérifier la validité des fichiers Terraform ✅ Ajout du `working-directory`
+      # 5. Vérifier la validité des fichiers Terraform
       - name: Terraform Validate
         run: terraform validate
-        working-directory: infrastructure/
 
-      # 7. Générer le plan Terraform ✅ Ajout du `working-directory`
+      # 6. Générer le plan Terraform
       - name: Terraform Plan
         run: terraform plan -out=tfplan
-        working-directory: infrastructure/
 
-      # 8. Appliquer les changements Terraform ✅ Ajout du `working-directory`
+      # 7. Appliquer les changements Terraform
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
-        working-directory: infrastructure/
