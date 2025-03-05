@@ -5,39 +5,39 @@ output "vpc_id" {
   value       = module.vpc.vpc_id
 }
 
-output "public_subnet_ids" {
-  description = "The ID of the public subnets"
-  value       = module.subnets.public_subnet_ids
-}
-output "private_subnet_ids" {
-  description = "The ID of the private subnets"
-  value       = module.subnets.private_subnet_ids
-}
+# output "public_subnet_ids" {
+#   description = "The ID of the public subnets"
+#   value       = module.subnets.public_subnet_ids
+# }
+# output "private_subnet_ids" {
+#   description = "The ID of the private subnets"
+#   value       = module.subnets.private_subnet_ids
+# }
 
-output "web_server_sg_id" {
-  description = "ID of the Web Server Security Group"
-  value       = module.security_groups
-}
+# output "web_server_sg_id" {
+#   description = "ID of the Web Server Security Group"
+#   value       = module.security_groups
+# }
 
-output "db_server_sg_id" {
-  description = "ID of the Database Server Security Group"
-  value       = module.security_groups
-}
+# output "db_server_sg_id" {
+#   description = "ID of the Database Server Security Group"
+#   value       = module.security_groups
+# }
 
-output "lb_web_sg_id" {
-  description = "ID of the Web Load Balancer Security Group"
-  value       = module.security_groups
-}
+# output "lb_web_sg_id" {
+#   description = "ID of the Web Load Balancer Security Group"
+#   value       = module.security_groups
+# }
 
-output "lb_db_sg_id" {
-  description = "ID of the Database Load Balancer Security Group"
-  value       = module.security_groups
-}
+# output "lb_db_sg_id" {
+#   description = "ID of the Database Load Balancer Security Group"
+#   value       = module.security_groups
+# }
 
-output "igw_id" {
-  description = "ID of the Internet Gateway"
-  value       = module.igws.igw_id
-}
+# output "igw_id" {
+#   description = "ID of the Internet Gateway"
+#   value       = module.igws.igw_id
+# }
 
 # output "elastic_ips" {
 #   description = "Liste of Elastic IPs createds"

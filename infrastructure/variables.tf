@@ -25,7 +25,7 @@ variable "vpc_cidr" {
 }
 
 variable "project_name" {
-  description = "PLANK-PARIS"
+  description = "Project name"
   type        = string
   default     = "PLANK-PARIS"
 }

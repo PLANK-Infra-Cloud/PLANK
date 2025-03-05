@@ -5,5 +5,6 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   tags = {
     Name = "${var.project_name}-${var.vpc_name}"
+    Owner = "PLANK"
   }
 }
