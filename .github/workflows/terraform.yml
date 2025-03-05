@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - main
+      - develop
+    paths:
+      - 'infrastructure/**/*.tf'
   pull_request:
     branches:
       - main
+      - develop
+    paths:
+      - 'infrastructure/**/*.tf'
 
 jobs:
   terraform:
@@ -35,17 +41,19 @@ jobs:
       # 4. Initialize Terraform
       - name: Terraform Init
         run: terraform init
+        working-directory: infrastructure/
 
       # 5. Validate Terraform files
       - name: Terraform Validate
         run: terraform validate
+        working-directory: infrastructure/
 
       # 6. Generate Terraform Plan
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+        working-directory: infrastructure/
 
       # 7. Apply Terraform changes (optional)
-      # Uncomment this to apply automatically to AWS
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
-
+        working-directory: infrastructure/
