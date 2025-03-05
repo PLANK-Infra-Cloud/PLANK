@@ -29,6 +29,11 @@ output "elastic_ips" {
   value       = module.elastic_ips.elastic_ip_ids
 }
 
+output "public_route_table_id" {
+  description = "ID of the public route table"
+  value       = module.route_tables.public_route_table_id
+}
+
 # output "web_server_id" {
 #   description = "ID of the Web Server instance"
 #   value       = module.ec2_instances.web_server_id

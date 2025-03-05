@@ -51,16 +51,16 @@ module "igws" {
   vpc_name     = var.vpc_name
 }
 
-# #Call module route_tables
-# module "route_tables" {
-#   source              = "./aws/network/route_tables"
-#   vpc_id              = module.vpc.vpc_id
-#   public_subnet_ids   = module.subnets.public_subnet_ids
-#   private_subnet_ids  = module.subnets.private_subnet_ids
-#   igw_id              = module.igws.igw_id
-#   project_name        = var.project_name
-#   vpc_name            = var.vpc_name
-# }
+#Call module route_tables
+module "route_tables" {
+  source              = "./aws/network/route_tables"
+  vpc_id              = module.vpc.vpc_id
+  public_subnet_ids   = module.subnets.public_subnet_ids
+  private_subnet_ids  = module.subnets.private_subnet_ids
+  igw_id              = module.igws.igw_id
+  project_name        = var.project_name
+  vpc_name            = var.vpc_name
+}
 
 #Call module elastic_ips
 module "elastic_ips" {

@@ -3,6 +3,7 @@ resource "aws_route_table" "public" {
   vpc_id = var.vpc_id
   tags = {
     Name = "${var.project_name}-${var.vpc_name}-PublicRouteTable"
+    Owner= "PLANK"
   }
 }
 
