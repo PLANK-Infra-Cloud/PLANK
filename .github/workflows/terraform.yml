@@ -42,16 +42,17 @@ jobs:
 
       # 4. Initialiser Terraform
       - name: Terraform Init
-        run: terraform init
+        run: terraform -chdir=infrastructure init
 
       # 5. Vérifier la validité des fichiers Terraform
       - name: Terraform Validate
-        run: terraform validate
+        run: terraform -chdir=infrastructure validate
 
       # 6. Générer le plan Terraform
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform -chdir=infrastructure plan -out=tfplan
 
       # 7. Appliquer les changements Terraform
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform -chdir=infrastructure apply -auto-approve tfplan
+
