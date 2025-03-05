@@ -1,0 +1,10 @@
+---
+- name: Upgrade all packages
+  ansible.builtin.package:
+    name: "*"
+    state: latest
+
+- name: Install common packages
+  ansible.builtin.package:
+    name: "{{ postinstall_extra_packages_common }}"
+    state: present
