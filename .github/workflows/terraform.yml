@@ -4,17 +4,15 @@ on:
   push:
     branches:
       - main
-      - develop
+      # - develop
     paths:
-      - 'infrastructure/**/*.tf'
-      - 'main.tf'
+      - 'infrastructure/**.tf'
   pull_request:
     branches:
       - main
-      - develop
+      # - develop
     paths:
-      - 'infrastructure/**/*.tf'
-      - 'main.tf'
+      - 'infrastructure/**.tf'
 
 jobs:
   terraform:
