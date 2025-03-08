@@ -4,8 +4,8 @@ all:
       children:
         ds_managers:
           hosts:
-            ds-master:
+            ds-master-ydays: # Set the hostname of the master node
         ds_workers:
           hosts:
-            ds-node01:
-            ds-node02:
+            ds-node01-ydays: # Set the hostname of the worker node
+            ds-node02-ydays: # Set the hostname of the worker node
