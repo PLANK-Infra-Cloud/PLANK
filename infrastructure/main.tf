@@ -81,10 +81,3 @@ module "ec2_instances" {
   vpc_name                  = var.vpc_name
   ami                       = var.ami
 }
-
-# #Call module s3 bucket
-# module "s3_bucket" {
-#   source       = "./aws/storage/s3_buckets"
-#   project_name = var.project_name
-#   environment  = var.environment
-# }
