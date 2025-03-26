@@ -77,3 +77,9 @@ variable "ami" {
   type        = string
   default     = "ami-0ff71843f814379b3" # Ubuntu 22.04 x86_64"
 }
+
+variable "key_name" {
+  description = "AWS key pair name"
+  type        = string
+  default     = "PLANK-key"
+}

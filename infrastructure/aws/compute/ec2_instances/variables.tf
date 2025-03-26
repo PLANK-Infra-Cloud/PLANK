@@ -27,7 +27,13 @@ variable "ami" {
   description = "ID of the AMI"
   type        = string
 }
-# variable "private_subnet_id" {
-#   description = "Private subnet ID for the Database Server"
-#   type        = string
-# }
+
+variable "efs_dns_name" {
+  description = "EFS DNS name for mounting"
+  type        = string
+}
+
+variable "key_name" {
+  description = "Name of the AWS key pair for SSH access"
+  type        = string
+}
