@@ -79,6 +79,7 @@ module "ec2_instances" {
   EC2_security_group        = module.security_groups.instance_sg_id
   project_name              = var.project_name
   vpc_name                  = var.vpc_name
+  ami                       = var.ami
 }
 
 # #Call module s3 bucket

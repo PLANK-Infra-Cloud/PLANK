@@ -23,6 +23,10 @@ variable "vpc_name" {
   type        = string
 }
 
+variable "ami" {
+  description = "ID of the AMI"
+  type        = string
+}
 # variable "private_subnet_id" {
 #   description = "Private subnet ID for the Database Server"
 #   type        = string

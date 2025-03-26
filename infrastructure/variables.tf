@@ -71,3 +71,9 @@ variable "environment" {
   type        = string
   default     = "prod"
 }
+
+variable "ami" {
+  description = "ID of the AMI"
+  type        = string
+  default     = "ami-0ff71843f814379b3" # Ubuntu 22.04 x86_64"
+}
