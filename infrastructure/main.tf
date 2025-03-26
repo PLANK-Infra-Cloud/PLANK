@@ -73,13 +73,15 @@ module "elastic_ips" {
 
 #Call module ec2_instances
 module "ec2_instances" {
-  source                    = "./aws/compute/ec2_instances"
-  EC2_instance_type         = "t2.micro"
-  public_subnet_id          = module.subnets.public_subnet_ids[0]
-  EC2_security_group        = module.security_groups.instance_sg_id
-  project_name              = var.project_name
-  vpc_name                  = var.vpc_name
-  ami                       = var.ami
+  source             = "./aws/compute/ec2_instances"
+  EC2_instance_type  = var.EC2_instance_type
+  public_subnet_id   = module.subnets.public_subnet_ids[0]
+  EC2_security_group = module.security_groups.instance_sg_id
+  project_name       = var.project_name
+  vpc_name           = var.vpc_name
+  ami                = var.ami
+  key_name           = var.key_name
+  efs_dns_name       = module.efs.efs_dns_name
 }
 
 #Call module efs
