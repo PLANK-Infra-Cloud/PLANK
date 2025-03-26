@@ -6,13 +6,13 @@ on:
       - main
       - develop  # ✅ Activation du pipeline sur develop
     paths:
-      - 'infrastructure/*.tf'
+      - 'infrastructure/**.tf'
   pull_request:
     branches:
       - main
       - develop  # ✅ Activation du pipeline sur develop
     paths:
-      - 'infrastructure/*.tf'
+      - 'infrastructure/**.tf'
 
 jobs:
   terraform:
