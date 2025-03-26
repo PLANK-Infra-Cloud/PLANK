@@ -3,7 +3,7 @@ resource "aws_instance" "master" {
   instance_type          = var.EC2_instance_type
   subnet_id              = var.public_subnet_id
   security_groups        = [var.EC2_security_group]
-  key_name = var.key_name
+  key_name = var.key_name 
 
   user_data = <<-EOF
               #!/bin/bash
