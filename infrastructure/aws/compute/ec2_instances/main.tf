@@ -6,13 +6,23 @@ resource "aws_instance" "master" {
   key_name = var.key_name
 
   user_data = <<-EOF
-                #!/bin/bash
-                apt-get update -y
-                apt-get install -y nfs-common
-                mkdir -p /mnt/efs
-                mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
-                echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
-              EOF
+              #!/bin/bash
+              apt-get update -y
+              apt-get install -y nfs-common
+              mkdir -p /mnt/efs
+              # Attente DNS EFS (10 tentatives max)
+              for i in {1..10}; do
+                echo "Tentative $i: vérification DNS EFS..."
+                host ${var.efs_dns_name} && break
+                sleep 10
+              done
+              # Attente supplémentaire du service NFS
+              sleep 20
+              # Montage du système de fichiers EFS
+              mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
+              # Persistance au redémarrage
+              echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
+            EOF
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-master"
@@ -29,13 +39,23 @@ resource "aws_instance" "nodes1" {
   key_name = var.key_name
 
   user_data = <<-EOF
-                #!/bin/bash
-                apt-get update -y
-                apt-get install -y nfs-common
-                mkdir -p /mnt/efs
-                mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
-                echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
-              EOF
+              #!/bin/bash
+              apt-get update -y
+              apt-get install -y nfs-common
+              mkdir -p /mnt/efs
+              # Attente DNS EFS (10 tentatives max)
+              for i in {1..10}; do
+                echo "Tentative $i: vérification DNS EFS..."
+                host ${var.efs_dns_name} && break
+                sleep 10
+              done
+              # Attente supplémentaire du service NFS
+              sleep 20
+              # Montage du système de fichiers EFS
+              mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
+              # Persistance au redémarrage
+              echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
+            EOF
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-nodes1"
@@ -52,13 +72,23 @@ resource "aws_instance" "nodes2" {
   key_name = var.key_name
 
   user_data = <<-EOF
-                #!/bin/bash
-                apt-get update -y
-                apt-get install -y nfs-common
-                mkdir -p /mnt/efs
-                mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
-                echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
-              EOF
+              #!/bin/bash
+              apt-get update -y
+              apt-get install -y nfs-common
+              mkdir -p /mnt/efs
+              # Attente DNS EFS (10 tentatives max)
+              for i in {1..10}; do
+                echo "Tentative $i: vérification DNS EFS..."
+                host ${var.efs_dns_name} && break
+                sleep 10
+              done
+              # Attente supplémentaire du service NFS
+              sleep 20
+              # Montage du système de fichiers EFS
+              mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
+              # Persistance au redémarrage
+              echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
+            EOF
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-nodes2"
