@@ -1,5 +1,5 @@
 resource "aws_instance" "EC2" {
-  ami           = "ami-0446057e5961dfab6" # Amazon Linux 2
+  ami           = "ami-0ff71843f814379b3" # Ubuntu 24.04
   instance_type = var.EC2_instance_type
   subnet_id     = var.public_subnet_id
   security_groups = [
