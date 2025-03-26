@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - main
-      - develop  # ✅ Activation du pipeline sur develop
+      - develop  # Activation du pipeline sur develop
     paths:
       - 'infrastructure/**.tf'
   pull_request:
     branches:
       - main
-      - develop  # ✅ Activation du pipeline sur develop
+      - develop  # Activation du pipeline sur develop
     paths:
       - 'infrastructure/**.tf'
 
