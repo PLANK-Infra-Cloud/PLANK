@@ -1,15 +1,15 @@
-# Declare variables to match Terraform Cloud workspace settings (Terraform HCL : secrets & variables)
-variable "AWS_ACCESS_KEY_ID" {
-  type        = string
-  description = "AWS access key for authentication"
-  sensitive   = true
-}
+# # Declare variables to match Terraform Cloud workspace settings (Terraform HCL : secrets & variables)
+# variable "AWS_ACCESS_KEY_ID" {
+#   type        = string
+#   description = "AWS access key for authentication"
+#   sensitive   = true
+# }
 
-variable "AWS_SECRET_ACCESS_KEY" {
-  type        = string
-  description = "AWS secret access key for authentication"
-  sensitive   = true
-}
+# variable "AWS_SECRET_ACCESS_KEY" {
+#   type        = string
+#   description = "AWS secret access key for authentication"
+#   sensitive   = true
+# }
 
 # Declare the AWS variables
 variable "AWS_REGION" {
