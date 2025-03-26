@@ -41,15 +41,19 @@ jobs:
       # 4. Initialiser Terraform
       - name: Terraform Init
         run: terraform init
+        working-directory: infrastructure
 
       # 5. Vérifier la validité des fichiers Terraform
       - name: Terraform Validate
         run: terraform validate
+        working-directory: infrastructure
 
       # 6. Générer le plan Terraform
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+        working-directory: infrastructure
 
       # 7. Appliquer les changements Terraform
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
+        working-directory: infrastructure
