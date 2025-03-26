@@ -1,9 +1,7 @@
-# output "bucket_name" {
-#   description = "Name of the S3 bucket"
-#   value       = aws_s3_bucket.main_bucket.bucket
-# }
+output "efs_id" {
+  value = aws_efs_file_system.efs.id
+}
 
-# output "bucket_arn" {
-#   description = "ARN of the S3 bucket"
-#   value       = aws_s3_bucket.main_bucket.arn
-# }
+output "efs_dns_name" {
+  value = aws_efs_file_system.efs.dns_name
+}

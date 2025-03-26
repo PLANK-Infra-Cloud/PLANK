@@ -81,3 +81,12 @@ module "ec2_instances" {
   vpc_name                  = var.vpc_name
   ami                       = var.ami
 }
+
+#Call module efs
+module "efs" {
+  source              = "./aws/storage/efs"
+  project_name        = var.project_name
+  vpc_name            = var.vpc_name
+  subnet_ids          = module.subnets.private_subnet_ids
+  efs_security_group  = module.security_groups.efs_sg_id
+}

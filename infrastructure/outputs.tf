@@ -65,3 +65,13 @@ output "nodes2_private_ip" {
 output "runner_private_ip" {
   value = module.ec2_instances.runner_private_ip
 }
+
+output "efs_id" {
+  description = "ID of the EFS file system"
+  value       = module.efs.efs_id
+}
+
+output "efs_dns_name" {
+  description = "DNS name of the EFS file system"
+  value       = module.efs.efs_dns_name
+}

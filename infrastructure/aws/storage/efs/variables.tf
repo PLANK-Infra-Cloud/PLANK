@@ -1,10 +1,19 @@
-# variable "project_name" {
-#   description = "Name of the project"
-#   type        = string
-# }
+variable "project_name" {
+  description = "Project name"
+  type        = string
+}
 
-# variable "environment" {
-#   description = "Environment (dev, prod, ..)"
-#   type        = string
-#   default     = "prod"
-# }
+variable "vpc_name" {
+  description = "VPC name"
+  type        = string
+}
+
+variable "subnet_ids" {
+  description = "Subnets where to mount EFS"
+  type        = list(string)
+}
+
+variable "efs_security_group" {
+  description = "Security group allowing NFS access to EFS"
+  type        = string
+}
