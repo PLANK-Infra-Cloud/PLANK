@@ -1,0 +1,9 @@
+# #######
+# runtime
+# #######
+ansible
+ansible-pylibssh
+ansible-lint
+black
+boto3
+pycodestyle
