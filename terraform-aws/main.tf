@@ -29,6 +29,20 @@ resource "aws_security_group" "swarm-cluster" {
   }
 
   ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 2377
     to_port     = 2377
     protocol    = "tcp"
@@ -70,7 +84,7 @@ resource "aws_security_group" "swarm-cluster" {
 resource "aws_instance" "swarm" {
   count         = var.instance_count
   ami           = var.instance_ami
-  instance_type = var.instance_type
+  instance_type = local.instance_types[count.index]
   key_name      = var.key_name
   vpc_security_group_ids = [aws_security_group.swarm-cluster.id]
 
@@ -85,6 +99,17 @@ resource "aws_instance" "swarm" {
     Role  = count.index == 0 ? "master" : "node"
     Owner = "PLANK"
   }
+}
+
+# ===============================
+# Construction d’une map de types d'instances EC2
+# ===============================
+locals {
+  instance_types = [
+    var.instance_type_manager,
+    var.instance_type_worker,
+    var.instance_type_worker
+  ]
 }
 
 # ===============================

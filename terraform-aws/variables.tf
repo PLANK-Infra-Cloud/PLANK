@@ -10,10 +10,16 @@ variable "instance_count" {
   default     = 3
 }
 
-variable "instance_type" {
-  description = "Type d'instance EC2"
+variable "instance_type_manager" {
+  description = "Type d'instance EC2 pour le manager (GitLab)"
   type        = string
-  default     = "t2.micro"
+  default     = "t3a.large"
+}
+
+variable "instance_type_worker" {
+  description = "Type d'instance EC2 pour les workers"
+  type        = string
+  default     = "t3a.medium"
 }
 
 variable "instance_disk_size" {
