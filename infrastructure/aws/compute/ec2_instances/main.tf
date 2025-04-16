@@ -3,26 +3,22 @@ resource "aws_instance" "master" {
   instance_type          = var.EC2_instance_type
   subnet_id              = var.public_subnet_id
   security_groups        = [var.EC2_security_group]
-  key_name = var.key_name 
+  key_name               = var.key_name
 
   user_data = <<-EOF
               #!/bin/bash
               apt-get update -y
               apt-get install -y nfs-common
               mkdir -p /mnt/efs
-              # Attente DNS EFS (10 tentatives max)
               for i in {1..10}; do
                 echo "Tentative $i: vérification DNS EFS..."
                 host ${var.efs_dns_name} && break
                 sleep 10
               done
-              # Attente supplémentaire du service NFS
               sleep 20
-              # Montage du système de fichiers EFS
               mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
-              # Persistance au redémarrage
               echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
-            EOF
+              EOF
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-master"
@@ -36,26 +32,9 @@ resource "aws_instance" "nodes1" {
   instance_type          = var.EC2_instance_type
   subnet_id              = var.public_subnet_id
   security_groups        = [var.EC2_security_group]
-  key_name = var.key_name
+  key_name               = var.key_name
 
-  user_data = <<-EOF
-              #!/bin/bash
-              apt-get update -y
-              apt-get install -y nfs-common
-              mkdir -p /mnt/efs
-              # Attente DNS EFS (10 tentatives max)
-              for i in {1..10}; do
-                echo "Tentative $i: vérification DNS EFS..."
-                host ${var.efs_dns_name} && break
-                sleep 10
-              done
-              # Attente supplémentaire du service NFS
-              sleep 20
-              # Montage du système de fichiers EFS
-              mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
-              # Persistance au redémarrage
-              echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
-            EOF
+  user_data = aws_instance.master.user_data
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-nodes1"
@@ -69,26 +48,9 @@ resource "aws_instance" "nodes2" {
   instance_type          = var.EC2_instance_type
   subnet_id              = var.public_subnet_id
   security_groups        = [var.EC2_security_group]
-  key_name = var.key_name
+  key_name               = var.key_name
 
-  user_data = <<-EOF
-              #!/bin/bash
-              apt-get update -y
-              apt-get install -y nfs-common
-              mkdir -p /mnt/efs
-              # Attente DNS EFS (10 tentatives max)
-              for i in {1..10}; do
-                echo "Tentative $i: vérification DNS EFS..."
-                host ${var.efs_dns_name} && break
-                sleep 10
-              done
-              # Attente supplémentaire du service NFS
-              sleep 20
-              # Montage du système de fichiers EFS
-              mount -t nfs4 -o nfsvers=4.1 ${var.efs_dns_name}:/ /mnt/efs
-              # Persistance au redémarrage
-              echo "${var.efs_dns_name}:/ /mnt/efs nfs4 defaults,_netdev 0 0" >> /etc/fstab
-            EOF
+  user_data = aws_instance.master.user_data
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-nodes2"
@@ -102,11 +64,58 @@ resource "aws_instance" "runner" {
   instance_type          = var.EC2_instance_type
   subnet_id              = var.public_subnet_id
   security_groups        = [var.EC2_security_group]
-  key_name = var.key_name
+  key_name               = var.key_name
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-runner"
     Owner = "PLANK"
     Role  = "standalone-runner"
   }
+}
+
+locals {
+  nodes = {
+    master  = aws_instance.master.public_ip
+    nodes1  = aws_instance.nodes1.public_ip
+    nodes2  = aws_instance.nodes2.public_ip
+  }
+}
+
+resource "null_resource" "wait_for_ssh" {
+  for_each = local.nodes
+
+  connection {
+    type        = "ssh"
+    host        = each.value
+    user        = "ubuntu"
+    private_key = file(var.ssh_private_key_path)
+    timeout     = "2m"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo ${each.key} est accessible en SSH ${each.value}"
+    ]
+  }
+}
+
+
+resource "null_resource" "ansible_apply" {
+  provisioner "local-exec" {
+    command = <<EOT
+echo "Lancement du playbook Ansible"
+
+LOG_FILE="../ansible-aws/logs/deploy_$(date +%Y%m%d_%H%M%S).log"
+
+ANSIBLE_FORCE_COLOR=true ANSIBLE_CONFIG=../ansible-aws/ansible.cfg \
+ansible-playbook ../ansible-aws/docker-swarm.yml | tee $LOG_FILE
+
+echo "Playbook terminé. Logs : $LOG_FILE"
+EOT
+    working_dir = "${path.module}"
+  }
+
+  depends_on = [
+    null_resource.wait_for_ssh
+  ]
 }

@@ -63,7 +63,7 @@ variable "eip_count" {
 variable "EC2_instance_type" {
   description = "Instance type for the Web Server"
   type        = string
-  default     = "t2.micro"
+  default     = "t3a.large"
 }
 
 variable "environment" {
@@ -82,4 +82,10 @@ variable "key_name" {
   description = "AWS key pair name"
   type        = string
   default     = "PLANK-key"
+}
+
+variable "ssh_private_key_path" {
+  description = "Chemin vers la clé privée SSH"
+  type        = string
+  default     = "~/.ssh/PLANK-key.pem"
 }

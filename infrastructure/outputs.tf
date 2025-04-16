@@ -75,3 +75,13 @@ output "efs_dns_name" {
   description = "DNS name of the EFS file system"
   value       = module.efs.efs_dns_name
 }
+
+output "swarm_nodes" {
+  description = "IPs publiques des noeuds Swarm"
+  value       = module.ec2_instances.swarm_nodes
+}
+
+output "runner_ip" {
+  description = "IP publique du runner standalone"
+  value       = module.ec2_instances.runner_public_ip
+}
