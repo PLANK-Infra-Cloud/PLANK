@@ -62,14 +62,14 @@ module "route_tables" {
   vpc_name            = var.vpc_name
 }
 
-#Call module elastic_ips
-module "elastic_ips" {
-  source       = "./aws/network/elastic_ips"
-  eip_count    = var.eip_count
-  # instance_ids = var.instance_ids
-  project_name = var.project_name
-  vpc_name     = var.vpc_name
-}
+# #Call module elastic_ips
+# module "elastic_ips" {
+#   source       = "./aws/network/elastic_ips"
+#   eip_count    = var.eip_count
+#   # instance_ids = var.instance_ids
+#   project_name = var.project_name
+#   vpc_name     = var.vpc_name
+# }
 
 #Call module ec2_instances
 module "ec2_instances" {

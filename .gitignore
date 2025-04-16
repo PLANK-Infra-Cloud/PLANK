@@ -1,3 +1,7 @@
 infrastructure/terraform.tfstate
 infrastructure/terraform.tfstate.backup
+<<<<<<< HEAD
+=======
 .terraform
+>>>>>>> f06195416b15dd36c8cef0fe634d78c1a02fdca6
+.DS_Store

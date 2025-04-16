@@ -24,10 +24,10 @@ output "igw_id" {
   value       = module.igws.igw_id
 }
 
-output "elastic_ips" {
-  description = "Liste of Elastic IPs createds"
-  value       = module.elastic_ips.elastic_ip_ids
-}
+# output "elastic_ips" {
+#   description = "Liste of Elastic IPs createds"
+#   value       = module.elastic_ips.elastic_ip_ids
+# }
 
 output "public_route_table_id" {
   description = "ID of the public route table"

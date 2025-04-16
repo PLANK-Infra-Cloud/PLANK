@@ -1,0 +1,58 @@
+---
+- name: Initialize Docker Swarm on master
+  when: "'role__master' in group_names"
+  block:
+    - name: Check Docker Swarm status
+      ansible.builtin.shell: docker info --format '{{ "{{.Swarm.LocalNodeState}}" }}'
+      register: docker_swarm_manager_status
+      changed_when: false
+
+    - name: Initialize Docker Swarm
+      ansible.builtin.shell:
+        cmd: docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}
+      when: "'inactive' in docker_swarm_manager_status.stdout"
+      register: swarm_init
+      changed_when: "'Swarm initialized' in swarm_init.stdout"
+
+    - name: Retrieve Docker Swarm token
+      ansible.builtin.shell: docker swarm join-token worker -q
+      register: docker_swarm_token
+      changed_when: false
+
+    - name: Share token and master IP to all hosts
+      ansible.builtin.set_fact:
+        swarm_worker_token:
+          value: "{{ docker_swarm_token.stdout }}"
+          cacheable: true
+        swarm_master_ip:
+          value: "{{ ansible_default_ipv4.address }}"
+          cacheable: true
+
+- name: Join workers to Docker Swarm
+  when: "'role__node' in group_names"
+  block:
+    - name: Check if node is part of a swarm
+      ansible.builtin.shell: docker info --format '{{ "{{.Swarm.LocalNodeState}}" }}'
+      register: docker_swarm_worker_status
+      changed_when: false
+
+    - name: Join Swarm as worker if not already part of a swarm
+      ansible.builtin.shell:
+        cmd: docker swarm join --token {{ hostvars[groups['role__master'][0]].swarm_worker_token.value }} {{ hostvars[groups['role__master'][0]].swarm_master_ip.value }}:2377
+      when: "'inactive' in docker_swarm_worker_status.stdout"
+      register: swarm_join
+      changed_when: "'joined a swarm' in swarm_join.stdout"
+      failed_when: swarm_join.rc != 0 and ('joined a swarm' not in swarm_join.stdout)
+      ignore_errors: true
+
+- name: Afficher les nœuds du cluster depuis le master
+  when: inventory_hostname in groups['role__master']
+  block:
+    - name: Affiche la liste des nœuds Docker Swarm
+      ansible.builtin.shell: docker node ls
+      register: swarm_node_list
+      changed_when: false
+
+    - name: Affiche le résultat du cluster
+      ansible.builtin.debug:
+        var: swarm_node_list.stdout_lines

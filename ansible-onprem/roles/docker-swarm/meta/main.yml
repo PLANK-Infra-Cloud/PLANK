@@ -1,0 +1,9 @@
+galaxy_info:
+  author: Thomas Fx
+  description: Manage Docker Swam cluster
+  min_ansible_version: 2.5.1
+  license: GPLv3
+
+  galaxy_tags: []
+
+dependencies: []

@@ -1,0 +1,5 @@
+# Ignore tous les fichiers du dossier
+*
+
+# Mais pas ce fichier .gitignore lui-même
+!.gitignore
