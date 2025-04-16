@@ -71,18 +71,19 @@ module "elastic_ips" {
   vpc_name     = var.vpc_name
 }
 
-# #Call module ec2_instances
-# module "ec2_instances" {
-#   source             = "./aws/compute/ec2_instances"
-#   EC2_instance_type  = var.EC2_instance_type
-#   public_subnet_id   = module.subnets.public_subnet_ids[0]
-#   EC2_security_group = module.security_groups.instance_sg_id
-#   project_name       = var.project_name
-#   vpc_name           = var.vpc_name
-#   ami                = var.ami
-#   key_name           = var.key_name
-#   efs_dns_name       = module.efs.efs_dns_name
-# }
+#Call module ec2_instances
+module "ec2_instances" {
+  source             = "./aws/compute/ec2_instances"
+  EC2_instance_type  = var.EC2_instance_type
+  public_subnet_id   = module.subnets.public_subnet_ids[0]
+  EC2_security_group = module.security_groups.instance_sg_id
+  project_name       = var.project_name
+  vpc_name           = var.vpc_name
+  ami                = var.ami
+  key_name           = var.key_name
+  efs_dns_name       = module.efs.efs_dns_name
+  ssh_private_key_content = var.ssh_private_key_content
+}
 
 #Call module efs
 module "efs" {
@@ -91,18 +92,4 @@ module "efs" {
   vpc_name            = var.vpc_name
   subnet_ids          = module.subnets.private_subnet_ids
   efs_security_group  = module.security_groups.efs_sg_id
-}
-
-# EC2 + Swarm
-module "ec2_instances" {
-  source                = "./aws/compute/ec2_instances"
-  ami                   = var.ami
-  EC2_instance_type     = var.EC2_instance_type
-  public_subnet_id      = module.subnets.public_subnet_ids[0]
-  EC2_security_group    = module.security_groups.instance_sg_id
-  project_name          = var.project_name
-  vpc_name              = var.vpc_name
-  key_name              = var.key_name
-  efs_dns_name          = module.efs.efs_dns_name
-  ssh_private_key_path  = var.ssh_private_key_path
 }

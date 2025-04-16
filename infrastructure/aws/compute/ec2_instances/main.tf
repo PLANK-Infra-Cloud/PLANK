@@ -88,7 +88,7 @@ resource "null_resource" "wait_for_ssh" {
     type        = "ssh"
     host        = each.value
     user        = "ubuntu"
-    private_key = file(var.ssh_private_key_path)
+    private_key = var.ssh_private_key_content
     timeout     = "2m"
   }
 
