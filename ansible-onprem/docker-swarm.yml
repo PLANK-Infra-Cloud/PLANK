@@ -1,7 +1,0 @@
----
-- hosts: docker-swarm-servers
-  
-  roles:
-    - postinstall
-    - docker
-    - docker-swarm

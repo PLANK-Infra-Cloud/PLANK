@@ -1,8 +1,0 @@
-# #######
-# runtime
-# #######
-ansible
-ansible-pylibssh
-ansible-lint
-black
-pycodestyle

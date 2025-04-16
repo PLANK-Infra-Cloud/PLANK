@@ -1,10 +1,10 @@
 # Répertoires
 ANSIBLE_DIR=.
-TERRAFORM_DIR=../terraform-aws
+TERRAFORM_DIR=../infrastructure/aws
 SCRIPT_DIR=$(ANSIBLE_DIR)/scripts
 LOG_DIR=$(ANSIBLE_DIR)/logs
 INVENTORY_FILE=$(ANSIBLE_DIR)/inventory.yml
-PRIVATE_KEY=~/.ssh/TFX-PLANK-AWS.pem
+PRIVATE_KEY=~/.ssh/PLANK-key.pem
 
 .PHONY: init plan apply destroy inventory ansible deploy log clean
 

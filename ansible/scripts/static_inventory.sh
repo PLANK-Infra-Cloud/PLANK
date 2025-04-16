@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Répertoire où se trouve ton state Terraform
-TERRAFORM_DIR="../../terraform-aws"
+TERRAFORM_DIR="../../infrastructure/aws"
 STATE_FILE="$TERRAFORM_DIR/terraform.tfstate"
 INVENTORY_FILE="../inventory.yml"
 

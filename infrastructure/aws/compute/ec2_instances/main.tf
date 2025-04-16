@@ -105,10 +105,10 @@ resource "null_resource" "ansible_apply" {
     command = <<EOT
 echo "Lancement du playbook Ansible"
 
-LOG_FILE="../ansible-aws/logs/deploy_$(date +%Y%m%d_%H%M%S).log"
+LOG_FILE="../ansible/logs/deploy_$(date +%Y%m%d_%H%M%S).log"
 
 ANSIBLE_FORCE_COLOR=true ANSIBLE_CONFIG=../ansible-aws/ansible.cfg \
-ansible-playbook ../ansible-aws/docker-swarm.yml | tee $LOG_FILE
+ansible-playbook ../ansible/docker-swarm.yml | tee $LOG_FILE
 
 echo "Playbook terminé. Logs : $LOG_FILE"
 EOT
