@@ -84,8 +84,13 @@ variable "key_name" {
   default     = "PLANK-key"
 }
 
-variable "ssh_private_key_path" {
-  description = "Chemin vers la clé privée SSH"
+# variable "ssh_private_key_path" {
+#   description = "Chemin vers la clé privée SSH"
+#   type        = string
+#   default     = "~/.ssh/PLANK-key.pem"
+# }
+
+variable "ssh_private_key_content" {
+  description = "Contenu de la clé privée SSH pour la connexion aux instances"
   type        = string
-  default     = "~/.ssh/PLANK-key.pem"
 }
