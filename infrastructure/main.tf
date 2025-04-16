@@ -3,7 +3,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.82.0" # Compatible avec AWS provider version 4.16 et plus
+      version = "~> 5.94.1" # Compatible avec AWS provider version 4.16 et plus
     }
   }
 }
@@ -71,26 +71,25 @@ module "route_tables" {
 #   vpc_name     = var.vpc_name
 # }
 
-# #Call module ec2_instances
-# module "ec2_instances" {
-#   source = "./aws/compute/ec2_instances"
+#Call module ec2_instances
+module "ec2_instances" {
+  source             = "./aws/compute/ec2_instances"
+  EC2_instance_type  = var.EC2_instance_type
+  public_subnet_id   = module.subnets.public_subnet_ids[0]
+  EC2_security_group = module.security_groups.instance_sg_id
+  project_name       = var.project_name
+  vpc_name           = var.vpc_name
+  ami                = var.ami
+  key_name           = var.key_name
+  efs_dns_name       = module.efs.efs_dns_name
+  ssh_private_key_content = var.ssh_private_key_content
+}
 
-#   bastion_instance_type  = "t2.micro"
-#   db_server_instance_type   = "t2.micro"
-
-#   public_subnet_id          = module.subnets.public_subnet_ids[0]
-#   private_subnet_id         = module.subnets.private_subnet_ids[0]
-
-#   web_server_security_group = module.security_groups.web_server_sg_id
-#   db_server_security_group  = module.security_groups.db_server_sg_id
-
-#   project_name              = var.project_name
-#   vpc_name                  = var.vpc_name
-# }
-
-# #Call module s3 bucket
-# module "s3_bucket" {
-#   source       = "./aws/storage/s3_buckets"
-#   project_name = var.project_name
-#   environment  = var.environment
-# }
+#Call module efs
+module "efs" {
+  source              = "./aws/storage/efs"
+  project_name        = var.project_name
+  vpc_name            = var.vpc_name
+  subnet_ids          = module.subnets.private_subnet_ids
+  efs_security_group  = module.security_groups.efs_sg_id
+}

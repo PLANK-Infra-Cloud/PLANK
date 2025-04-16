@@ -1,39 +1,50 @@
-# variable "web_server_instance_type" {
-#   description = "Instance type for the Web Server"
+variable "ami" {
+  description = "AMI ID pour les instances EC2"
+  type        = string
+}
+
+variable "EC2_instance_type" {
+  description = "Type d'instance EC2"
+  type        = string
+  default     = "t3a.large"
+}
+
+variable "public_subnet_id" {
+  description = "ID du sous-réseau public"
+  type        = string
+}
+
+variable "EC2_security_group" {
+  description = "Groupe de sécurité des instances EC2"
+  type        = string
+}
+
+variable "project_name" {
+  description = "Nom du projet"
+  type        = string
+}
+
+variable "vpc_name" {
+  description = "Nom du VPC"
+  type        = string
+}
+
+variable "key_name" {
+  description = "Nom de la clé SSH utilisée pour les EC2"
+  type        = string
+}
+
+variable "efs_dns_name" {
+  description = "DNS de l’EFS à monter sur les nœuds"
+  type        = string
+}
+
+# variable "ssh_private_key_path" {
+#   description = "Chemin vers la clé privée pour SSH"
 #   type        = string
 # }
 
-# variable "db_server_instance_type" {
-#   description = "Instance type for the Database Server"
-#   type        = string
-# }
-
-# variable "public_subnet_id" {
-#   description = "Public subnet ID for the Web Server"
-#   type        = string
-# }
-
-# variable "private_subnet_id" {
-#   description = "Private subnet ID for the Database Server"
-#   type        = string
-# }
-
-# variable "web_server_security_group" {
-#   description = "Security group ID for the Web Server"
-#   type        = string
-# }
-
-# variable "db_server_security_group" {
-#   description = "Security group ID for the Database Server"
-#   type        = string
-# }
-
-# variable "project_name" {
-#   description = "Name of the project for tagging"
-#   type        = string
-# }
-
-# variable "vpc_name" {
-#   description = "Name of the VPC for tagging"
-#   type        = string
-# }
+variable "ssh_private_key_content" {
+  description = "Contenu de la clé privée SSH pour la connexion aux instances"
+  type        = string
+}

@@ -1,15 +1,15 @@
-# Declare variables to match Terraform Cloud workspace settings (Terraform HCL : secrets & variables)
-variable "AWS_ACCESS_KEY_ID" {
-  type        = string
-  description = "AWS access key for authentication"
-  sensitive   = true
-}
+# # Declare variables to match Terraform Cloud workspace settings (Terraform HCL : secrets & variables)
+# variable "AWS_ACCESS_KEY_ID" {
+#   type        = string
+#   description = "AWS access key for authentication"
+#   sensitive   = true
+# }
 
-variable "AWS_SECRET_ACCESS_KEY" {
-  type        = string
-  description = "AWS secret access key for authentication"
-  sensitive   = true
-}
+# variable "AWS_SECRET_ACCESS_KEY" {
+#   type        = string
+#   description = "AWS secret access key for authentication"
+#   sensitive   = true
+# }
 
 # Declare the AWS variables
 variable "AWS_REGION" {
@@ -25,7 +25,7 @@ variable "vpc_cidr" {
 }
 
 variable "project_name" {
-  description = "PLANK-PARIS"
+  description = "Project name"
   type        = string
   default     = "PLANK-PARIS"
 }
@@ -60,20 +60,37 @@ variable "eip_count" {
   default     = 3
 }
 
-variable "web_server_instance_type" {
+variable "EC2_instance_type" {
   description = "Instance type for the Web Server"
   type        = string
-  default     = "t2.micro"
-}
-
-variable "db_server_instance_type" {
-  description = "Instance type for the Database Server"
-  type        = string
-  default     = "t2.micro"
+  default     = "t3a.large"
 }
 
 variable "environment" {
   description = "Environment (dev, prod, ...)"
   type        = string
   default     = "prod"
+}
+
+variable "ami" {
+  description = "ID of the AMI"
+  type        = string
+  default     = "ami-0ff71843f814379b3" # Ubuntu 22.04 x86_64"
+}
+
+variable "key_name" {
+  description = "AWS key pair name"
+  type        = string
+  default     = "PLANK-key"
+}
+
+# variable "ssh_private_key_path" {
+#   description = "Chemin vers la clé privée SSH"
+#   type        = string
+#   default     = "~/.ssh/PLANK-key.pem"
+# }
+
+variable "ssh_private_key_content" {
+  description = "Contenu de la clé privée SSH pour la connexion aux instances"
+  type        = string
 }

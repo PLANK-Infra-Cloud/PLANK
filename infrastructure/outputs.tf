@@ -14,24 +14,9 @@ output "private_subnet_ids" {
   value       = module.subnets.private_subnet_ids
 }
 
-output "web_server_sg_id" {
-  description = "ID of the Web Server Security Group"
-  value       = module.security_groups
-}
-
-output "db_server_sg_id" {
-  description = "ID of the Database Server Security Group"
-  value       = module.security_groups
-}
-
-output "lb_web_sg_id" {
-  description = "ID of the Web Load Balancer Security Group"
-  value       = module.security_groups
-}
-
-output "lb_db_sg_id" {
-  description = "ID of the Database Load Balancer Security Group"
-  value       = module.security_groups
+output "instance_sg_id" {
+  description = "ID of the Security Group"
+  value       = module.security_groups.instance_sg_id
 }
 
 output "igw_id" {
@@ -44,32 +29,59 @@ output "igw_id" {
 #   value       = module.elastic_ips.elastic_ip_ids
 # }
 
-# output "web_server_id" {
-#   description = "ID of the Web Server instance"
-#   value       = module.ec2_instances.web_server_id
-# }
+output "public_route_table_id" {
+  description = "ID of the public route table"
+  value       = module.route_tables.public_route_table_id
+}
 
-# output "db_server_id" {
-#   description = "ID of the Database Server instance"
-#   value       = module.ec2_instances.db_server_id
-# }
+output "master_public_ip" {
+  value = module.ec2_instances.master_public_ip
+}
 
-# output "web_server_public_ip" {
-#   description = "Public IP of the Web Server instance"
-#   value       = module.ec2_instances.web_server_public_ip
-# }
+output "nodes1_public_ip" {
+  value = module.ec2_instances.nodes1_public_ip
+}
 
-# output "db_server_private_ip" {
-#   description = "Private IP of the Database Server instance"
-#   value       = module.ec2_instances.db_server_private_ip
-# }
+output "nodes2_public_ip" {
+  value = module.ec2_instances.nodes2_public_ip
+}
 
-# output "bucket_name" {
-#   description = "Name of the S3 bucket"
-#   value       = module.s3_bucket.bucket_name
-# }
+output "runner_public_ip" {
+  value = module.ec2_instances.runner_public_ip
+}
 
-# output "bucket_arn" {
-#   description = "ARN of the S3 bucket"
-#   value       = module.s3_bucket.bucket_arn
-# }
+output "master_private_ip" {
+  value = module.ec2_instances.master_private_ip
+}
+
+output "nodes1_private_ip" {
+  value = module.ec2_instances.nodes1_private_ip
+}
+
+output "nodes2_private_ip" {
+  value = module.ec2_instances.nodes2_private_ip
+}
+
+output "runner_private_ip" {
+  value = module.ec2_instances.runner_private_ip
+}
+
+output "efs_id" {
+  description = "ID of the EFS file system"
+  value       = module.efs.efs_id
+}
+
+output "efs_dns_name" {
+  description = "DNS name of the EFS file system"
+  value       = module.efs.efs_dns_name
+}
+
+output "swarm_nodes" {
+  description = "IPs publiques des noeuds Swarm"
+  value       = module.ec2_instances.swarm_nodes
+}
+
+output "runner_ip" {
+  description = "IP publique du runner standalone"
+  value       = module.ec2_instances.runner_public_ip
+}
