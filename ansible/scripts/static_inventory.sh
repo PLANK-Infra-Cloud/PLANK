@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Répertoire où se trouve ton state Terraform
-TERRAFORM_DIR="../../infrastructure/aws"
+TERRAFORM_DIR="../infrastructure"
 STATE_FILE="$TERRAFORM_DIR/terraform.tfstate"
-INVENTORY_FILE="../inventory.yml"
+INVENTORY_FILE="inventory.yml"
 
 echo "Récupération des IP DNS depuis $TERRAFORM_DIR"
 
@@ -21,7 +21,7 @@ if [ ! -f "$STATE_FILE" ]; then
 fi
 
 # Récupère l'output ansible_inventory_json (DNS public)
-INVENTORY_JSON=$(terraform -chdir="$TERRAFORM_DIR" output -raw ansible_inventory_json 2>/dev/null)
+INVENTORY_JSON=$(terraform -chdir="$TERRAFORM_DIR" output -json ansible_inventory_json 2>/dev/null | jq -r)
 
 if [ -z "$INVENTORY_JSON" ]; then
   echo "Erreur : l'output 'ansible_inventory_json' est vide ou non défini."

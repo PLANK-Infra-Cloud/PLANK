@@ -59,63 +59,54 @@ resource "aws_instance" "nodes2" {
   }
 }
 
-resource "aws_instance" "runner" {
-  ami                    = var.ami
-  instance_type          = var.EC2_instance_type
-  subnet_id              = var.public_subnet_id
-  security_groups        = [var.EC2_security_group]
-  key_name               = var.key_name
+# locals {
+#   nodes = {
+#     master  = aws_instance.master.public_ip
+#     nodes1  = aws_instance.nodes1.public_ip
+#     nodes2  = aws_instance.nodes2.public_ip
+#   }
+# }
 
-  tags = {
-    Name  = "${var.project_name}-${var.vpc_name}-runner"
-    Owner = "PLANK"
-    Role  = "standalone-runner"
-  }
-}
+# resource "null_resource" "wait_for_ssh" {
+#   for_each = local.nodes
 
-locals {
-  nodes = {
-    master  = aws_instance.master.public_ip
-    nodes1  = aws_instance.nodes1.public_ip
-    nodes2  = aws_instance.nodes2.public_ip
-  }
-}
+#   connection {
+#     type        = "ssh"
+#     host        = each.value
+#     user        = "ubuntu"
+#     private_key = file(var.ssh_private_key_path)
 
-resource "null_resource" "wait_for_ssh" {
-  for_each = local.nodes
+#     timeout     = "2m"
+#   }
 
-  connection {
-    type        = "ssh"
-    host        = each.value
-    user        = "ubuntu"
-    private_key = var.ssh_private_key_content
-    timeout     = "2m"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "echo ${each.key} est accessible en SSH ${each.value}"
-    ]
-  }
-}
+#   provisioner "remote-exec" {
+#     inline = [
+#       "echo ${each.key} est accessible en SSH ${each.value}"
+#     ]
+#   }
+# }
 
 
-resource "null_resource" "ansible_apply" {
-  provisioner "local-exec" {
-    command = <<EOT
-echo "Lancement du playbook Ansible"
+# resource "null_resource" "ansible_apply" {
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       #!/bin/bash
+#       echo "Lancement du playbook Ansible"
 
-LOG_FILE="../ansible/logs/deploy_$(date +%Y%m%d_%H%M%S).log"
+#       LOG_FILE="../ansible/logs/deploy_$(date +%Y%m%d_%H%M%S).log"
 
-ANSIBLE_FORCE_COLOR=true ANSIBLE_CONFIG=../ansible-aws/ansible.cfg \
-ansible-playbook ../ansible/docker-swarm.yml | tee $LOG_FILE
+#       ANSIBLE_FORCE_COLOR=true \
+#       ANSIBLE_CONFIG=../ansible/ansible.cfg \
+#       ansible-playbook -i ../inventory.yml ../ansible/docker-swarm.yml | tee "$LOG_FILE"
 
-echo "Playbook terminé. Logs : $LOG_FILE"
-EOT
-    working_dir = "${path.module}"
-  }
+#       echo "Playbook terminé. Logs : $LOG_FILE"
+#     EOT
 
-  depends_on = [
-    null_resource.wait_for_ssh
-  ]
-}
+#     interpreter = ["/bin/bash", "-c"]
+#     working_dir = "${path.module}"
+#   }
+
+#   depends_on = [
+#     null_resource.wait_for_ssh
+#   ]
+# }

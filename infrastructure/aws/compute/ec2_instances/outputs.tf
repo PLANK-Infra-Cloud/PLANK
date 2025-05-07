@@ -10,10 +10,6 @@ output "nodes2_private_ip" {
   value = aws_instance.nodes2.private_ip
 }
 
-output "runner_private_ip" {
-  value = aws_instance.runner.private_ip
-}
-
 output "master_public_ip" {
   description = "Adresse IP publique du master"
   value       = aws_instance.master.public_ip
@@ -27,11 +23,6 @@ output "nodes1_public_ip" {
 output "nodes2_public_ip" {
   description = "Adresse IP publique de nodes2"
   value       = aws_instance.nodes2.public_ip
-}
-
-output "runner_public_ip" {
-  description = "Adresse IP publique du runner"
-  value       = aws_instance.runner.public_ip
 }
 
 output "swarm_nodes" {

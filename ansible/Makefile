@@ -1,6 +1,6 @@
 # Répertoires
 ANSIBLE_DIR=.
-TERRAFORM_DIR=../infrastructure/aws
+TERRAFORM_DIR="../infrastructure"
 SCRIPT_DIR=$(ANSIBLE_DIR)/scripts
 LOG_DIR=$(ANSIBLE_DIR)/logs
 INVENTORY_FILE=$(ANSIBLE_DIR)/inventory.yml

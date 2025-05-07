@@ -82,7 +82,7 @@ module "ec2_instances" {
   ami                = var.ami
   key_name           = var.key_name
   efs_dns_name       = module.efs.efs_dns_name
-  ssh_private_key_content = var.ssh_private_key_content
+  ssh_private_key_path = var.ssh_private_key_path
 }
 
 #Call module efs
@@ -92,4 +92,55 @@ module "efs" {
   vpc_name            = var.vpc_name
   subnet_ids          = module.subnets.private_subnet_ids
   efs_security_group  = module.security_groups.efs_sg_id
+}
+
+locals {
+  nodes = {
+    master  = module.ec2_instances.master_public_ip
+    nodes1  = module.ec2_instances.nodes1_public_ip
+    nodes2  = module.ec2_instances.nodes2_public_ip
+  }
+}
+
+resource "null_resource" "wait_for_ssh" {
+  for_each = local.nodes
+
+  connection {
+    type        = "ssh"
+    host        = each.value
+    user        = "ubuntu"
+    private_key = file(var.ssh_private_key_path)
+
+    timeout     = "2m"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo ${each.key} est accessible en SSH ${each.value}"
+    ]
+  }
+}
+
+resource "null_resource" "ansible_apply" {
+  provisioner "local-exec" {
+    command = <<EOT
+      #!/bin/bash
+      echo "Lancement du playbook Ansible"
+
+      LOG_FILE="../ansible/logs/deploy_$(date +%Y%m%d_%H%M%S).log"
+
+      ANSIBLE_FORCE_COLOR=true \
+      ANSIBLE_CONFIG=../ansible/ansible.cfg \
+      ansible-playbook -i ../ansible/aws_ec2.yml ../ansible/docker-swarm.yml | tee "$LOG_FILE"
+
+      echo "Playbook terminé. Logs : $LOG_FILE"
+    EOT
+
+    interpreter = ["/bin/bash", "-c"]
+    working_dir = "${path.module}"
+  }
+
+  depends_on = [
+    null_resource.wait_for_ssh
+  ]
 }
