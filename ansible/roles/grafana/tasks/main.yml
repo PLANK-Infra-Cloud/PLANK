@@ -1,0 +1,46 @@
+- name: Lancer Grafana
+  docker_container:
+    name: grafana
+    image: grafana/grafana:latest
+    state: started
+    restart_policy: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+- name: Attendre que Grafana démarre
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: 3000
+    timeout: 60
+
+- name: Copie des dashboards
+  ansible.builtin.copy:
+    # src: "/files/cadvisor_dashboard.json"
+    src: "{{ item }}"
+    dest: "{{ monitoring_path }}"
+  loop:
+    - "cadvisor_dashboard.json"
+    - "dashboards.yml"
+    - "datasource.yml"
+    
+
+- name: Créer le dossier de dashboards dans le conteneur
+  ansible.builtin.command: docker exec grafana mkdir -p /var/lib/grafana/dashboards
+
+- name: Copier le dashboard JSON dans le conteneur
+  # ansible.builtin.command: docker cp {{ monitoring_path }}/files/cadvisor_dashboard.json grafana:/var/lib/grafana/dashboards/cadvisor_dashboard.json
+  ansible.builtin.command: docker cp {{ monitoring_path }}/ grafana:/var/lib/grafana/dashboards/cadvisor_dashboard.json
+
+# - name: Copier le fichier dashboards.yml de provisioning
+#   ansible.builtin.command: docker cp {{ monitoring_path }}/files/dashboards.yml grafana:/etc/grafana/provisioning/dashboards/dashboards.yml
+
+# - name: Copier le datasource.yml dans le conteneur
+#   ansible.builtin.command: docker cp {{ monitoring_path }}/files/datasource.yml grafana:/etc/grafana/provisioning/datasources/datasource.yml
+
+- name: Redémarrer le conteneur Grafana pour recharger les dashboards
+  docker_container:
+    name: grafana
+    state: started
+    restart: true

@@ -1,0 +1,12 @@
+---
+- hosts: all  
+  roles:
+    - postinstall
+    - docker
+    - cadvisor
+
+- hosts: managers
+  roles:
+    - prometheus
+    - grafana
+  

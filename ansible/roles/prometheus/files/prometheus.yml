@@ -1,0 +1,12 @@
+## Modifier les IP targets avec les IP des machines du Swarm (manuellement tant que pas d'automatisation)
+
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets:
+          - '15.236.122.205:8080' # IP master DS  
+          - '15.188.77.202:8080' # IP node DS
+          - '13.38.52.219:8080' # IP node DS

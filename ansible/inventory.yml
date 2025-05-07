@@ -1,0 +1,7 @@
+# Temporaire car manuel. Sera automatisé dans le déploy final
+
+all:
+  children:
+    managers:
+      hosts:
+        ec2-35-180-88-200.eu-west-3.compute.amazonaws.com:

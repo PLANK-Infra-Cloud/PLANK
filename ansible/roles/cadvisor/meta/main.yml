@@ -1,0 +1,10 @@
+galaxy_info:
+  author: Fari Al.
+  description: Install cAdvisor for monitoring
+
+  min_ansible_version: 2.5.1
+  license: GPLv3
+
+  galaxy_tags: []
+
+dependencies: []
