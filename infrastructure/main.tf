@@ -62,15 +62,6 @@ module "route_tables" {
   vpc_name            = var.vpc_name
 }
 
-# #Call module elastic_ips
-# module "elastic_ips" {
-#   source       = "./aws/network/elastic_ips"
-#   eip_count    = var.eip_count
-#   # instance_ids = var.instance_ids
-#   project_name = var.project_name
-#   vpc_name     = var.vpc_name
-# }
-
 #Call module ec2_instances
 module "ec2_instances" {
   source             = "./aws/compute/ec2_instances"
@@ -82,7 +73,8 @@ module "ec2_instances" {
   ami                = var.ami
   key_name           = var.key_name
   efs_dns_name       = module.efs.efs_dns_name
-  ssh_private_key_path = var.ssh_private_key_path
+  ssh_private_key_content = var.ssh_private_key_content
+#  ssh_private_key_path = var.ssh_private_key_path
 }
 
 #Call module efs
@@ -109,7 +101,8 @@ resource "null_resource" "wait_for_ssh" {
     type        = "ssh"
     host        = each.value
     user        = "ubuntu"
-    private_key = file(var.ssh_private_key_path)
+    private_key = var.ssh_private_key_content
+  #  private_key = file(var.ssh_private_key_path)
 
     timeout     = "2m"
   }

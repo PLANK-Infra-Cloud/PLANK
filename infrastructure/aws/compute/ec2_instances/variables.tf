@@ -39,7 +39,13 @@ variable "efs_dns_name" {
   type        = string
 }
 
-variable "ssh_private_key_path" {
-  description = "Chemin vers la clé privée pour SSH"
+# variable "ssh_private_key_path" {
+#   description = "Chemin vers la clé privée pour SSH"
+#   type        = string
+# }
+
+variable "ssh_private_key_content" {
+  description = "Contenu de la clé privée SSH"
   type        = string
+  sensitive   = true
 }
