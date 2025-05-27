@@ -44,8 +44,8 @@ variable "ssh_private_key_path" {
   type        = string
 }
 
-variable "ssh_private_key_content" {
-  description = "Contenu de la clé privée SSH"
-  type        = string
-  sensitive   = true
-}
+# variable "ssh_private_key_content" {
+#   description = "Contenu de la clé privée SSH"
+#   type        = string
+#   sensitive   = true
+# } 

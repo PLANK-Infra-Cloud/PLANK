@@ -75,7 +75,8 @@ variable "environment" {
 variable "ami" {
   description = "ID of the AMI"
   type        = string
-  default     = "ami-0ff71843f814379b3" # Ubuntu 22.04 x86_64"
+  #default     = "ami-0ff71843f814379b3" # Ubuntu 22.04 x86_64"
+  default     = "ami-0160e8d70ebc43ee1" #Ubuntu 24.04
 }
 
 variable "key_name" {

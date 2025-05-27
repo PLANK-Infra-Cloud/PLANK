@@ -73,7 +73,7 @@ module "ec2_instances" {
   ami                = var.ami
   key_name           = var.key_name
   efs_dns_name       = module.efs.efs_dns_name
-  ssh_private_key_content = var.ssh_private_key_content
+  # ssh_private_key_content = var.ssh_private_key_content
   ssh_private_key_path = var.ssh_private_key_path
 }
 
