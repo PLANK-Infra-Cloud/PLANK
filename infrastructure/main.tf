@@ -74,7 +74,7 @@ module "ec2_instances" {
   key_name           = var.key_name
   efs_dns_name       = module.efs.efs_dns_name
   ssh_private_key_content = var.ssh_private_key_content
-#  ssh_private_key_path = var.ssh_private_key_path
+  ssh_private_key_path = var.ssh_private_key_path
 }
 
 #Call module efs
@@ -101,8 +101,8 @@ resource "null_resource" "wait_for_ssh" {
     type        = "ssh"
     host        = each.value
     user        = "ubuntu"
-    private_key = var.ssh_private_key_content
-  #  private_key = file(var.ssh_private_key_path)
+#    private_key = var.ssh_private_key_content
+    private_key = file(var.ssh_private_key_path)
 
     timeout     = "2m"
   }
