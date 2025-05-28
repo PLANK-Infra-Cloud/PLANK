@@ -4,7 +4,12 @@ resource "aws_instance" "master" {
   subnet_id              = var.public_subnet_id
   security_groups        = [var.EC2_security_group]
   key_name               = var.key_name
-
+ 
+  root_block_device {
+    volume_size = var.instance_disk_size
+    volume_type = var.instance_disk_type
+    delete_on_termination = true
+  }
   user_data = <<-EOF
               #!/bin/bash
               apt-get update -y
@@ -23,7 +28,7 @@ resource "aws_instance" "master" {
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-master"
     Owner = "PLANK"
-    Role  = "swarm-master"
+    Role  = "master"
   }
 }
 
@@ -35,11 +40,17 @@ resource "aws_instance" "nodes1" {
   key_name               = var.key_name
 
   user_data = aws_instance.master.user_data
+  
+    root_block_device {
+    volume_size = var.instance_disk_size
+    volume_type = var.instance_disk_type
+    delete_on_termination = true
+  } 
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-nodes1"
     Owner = "PLANK"
-    Role  = "swarm-node"
+    Role  = "node"
   }
 }
 
@@ -51,10 +62,17 @@ resource "aws_instance" "nodes2" {
   key_name               = var.key_name
 
   user_data = aws_instance.master.user_data
+  
+    root_block_device {
+    volume_size = var.instance_disk_size
+    volume_type = var.instance_disk_type
+    delete_on_termination = true
+  } 
 
   tags = {
     Name  = "${var.project_name}-${var.vpc_name}-nodes2"
     Owner = "PLANK"
-    Role  = "swarm-node"
+    Role  = "node"
   }
 }
+

@@ -44,6 +44,18 @@ variable "ssh_private_key_path" {
   type        = string
 }
 
+variable "instance_disk_size" {
+  description = "Taille du disque root des instances EC2 (en GiB)"
+  type        = number
+  default     = 20
+}
+
+variable "instance_disk_type" {
+  description = "Type de disque root des instances EC2"
+  type        = string
+  default     = "gp3"
+}
+
 # variable "ssh_private_key_content" {
 #   description = "Contenu de la clé privée SSH"
 #   type        = string
